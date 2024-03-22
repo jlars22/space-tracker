@@ -9,5 +9,4 @@ public class SpacetrackerApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpacetrackerApplication.class, args);
     }
-
 }
