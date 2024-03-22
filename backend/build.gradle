@@ -6,6 +6,18 @@ plugins {
     id 'org.liquibase.gradle' version '2.2.0'
 }
 
+// Read .env file
+def envFile = file('.env')
+def envProperties = new Properties()
+envFile.withInputStream { inputStream ->
+    envProperties.load(inputStream)
+}
+def postgresBaseUrl = envProperties.getProperty('POSTGRES_BASE_URL') ?: 'localhost:5432'
+def postgresDatabase = envProperties.getProperty('POSTGRES_DATABASE') ?: 'spacetracker'
+def postgresUrl = "jdbc:postgresql://${postgresBaseUrl}/${postgresDatabase}"
+def postgresUsername = envProperties.getProperty('POSTGRES_USER') ?: 'user'
+def postgresPassword = envProperties.getProperty('POSTGRES_PASSWORD') ?: 'password'
+
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
@@ -65,9 +77,9 @@ jooq {
                 }
                 jdbc {
                     driver = "org.postgresql.Driver"
-                    url = project.properties['postgres.url']
-                    user = project.properties['postgres.username']
-                    password = project.properties['postgres.password']
+                    url = postgresUrl
+                    user = postgresUsername
+                    password = postgresPassword
                 }
             }
         }
@@ -79,9 +91,9 @@ liquibase {
     activities {
         main {
             changelogFile 'db/changelog/changelog-master.xml'
-            url project.properties['postgres.url']
-            username project.properties['postgres.username']
-            password project.properties['postgres.password']
+            url postgresUrl
+            username postgresUsername
+            password postgresPassword
             logLevel "info"
             secureParsing 'false'
         }
