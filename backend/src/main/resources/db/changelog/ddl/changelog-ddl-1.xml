@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2203241349" author="jonas.larsen">
+
+        <createTable tableName="iss_location">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="latitude" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="altitude" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="velocity" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visibility" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="people_on_board">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="location_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_people_iss" references="iss_location(id)"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

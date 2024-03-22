@@ -1,0 +1,92 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id "nu.studer.jooq" version "7.1"
+    id 'org.liquibase.gradle' version '2.2.0'
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.postgresql:postgresql:42.2.24'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    implementation 'org.jooq:jooq:3.17.0'
+    jooqGenerator "jakarta.xml.bind:jakarta.xml.bind-api:3.0.1"
+    jooqGenerator "org.postgresql:postgresql"
+    jooqGenerator files("src/main/resources")
+    jooqGenerator files("jars/SparkJDBC42.jar")
+
+    implementation "org.liquibase:liquibase-core:4.26.0"
+    liquibaseRuntime 'org.postgresql:postgresql:42.2.24'
+    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:3.0.2'
+    liquibaseRuntime 'info.picocli:picocli:4.6.1'
+    liquibaseRuntime "org.liquibase:liquibase-core:4.9.0"
+    liquibaseRuntime "org.yaml:snakeyaml:1.31"
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:1.18.22' // Add Lombok dependency
+    annotationProcessor 'org.projectlombok:lombok:1.18.22' // Add Lombok annotation processor
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jooq {
+    version = '3.17.0'
+
+    configurations {
+        main {
+            generationTool {
+                generator {
+                    name = "org.jooq.codegen.JavaGenerator"
+                    target {
+                        packageName = "com.generated"
+                        directory = "build/generated/source/jooq/main"
+                        clean = true
+                    }
+                    database {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                }
+                jdbc {
+                    driver = "org.postgresql.Driver"
+                    url = project.properties['postgres.url']
+                    user = project.properties['postgres.username']
+                    password = project.properties['postgres.password']
+                }
+            }
+        }
+    }
+}
+
+liquibase {
+    jvmArgs "-Duser.dir=$project.projectDir/src/main/resources"
+    activities {
+        main {
+            changelogFile 'db/changelog/changelog-master.xml'
+            url project.properties['postgres.url']
+            username project.properties['postgres.username']
+            password project.properties['postgres.password']
+            logLevel "info"
+            secureParsing 'false'
+        }
+    }
+    runList = 'main'
+}
+
+generateJooq.dependsOn update
