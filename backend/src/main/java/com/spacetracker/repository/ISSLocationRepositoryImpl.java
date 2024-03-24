@@ -35,12 +35,4 @@ public class ISSLocationRepositoryImpl implements ISSLocationRepository {
         return dslContext.selectFrom(ISS_LOCATION).fetchInto(ISSLocationDto.class);
     }
 
-    @Override
-    public ISSLocationDto fetchLatest() {
-        return dslContext
-            .selectFrom(ISS_LOCATION)
-            .orderBy(ISS_LOCATION.TIMESTAMP.desc())
-            .limit(1)
-            .fetchOneInto(ISSLocationDto.class);
-    }
 }

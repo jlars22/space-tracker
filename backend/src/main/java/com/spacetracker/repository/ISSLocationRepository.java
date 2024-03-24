@@ -6,5 +6,4 @@ import java.util.List;
 public interface ISSLocationRepository {
     void insert(ISSLocationDto issLocationDto);
     List<ISSLocationDto> fetchAll();
-    ISSLocationDto fetchLatest();
 }

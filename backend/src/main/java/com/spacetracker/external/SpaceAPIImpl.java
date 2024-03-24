@@ -23,6 +23,10 @@ public class SpaceAPIImpl implements SpaceAPI {
         String json = HttpClient.get(whereTheISSAtBaseUrl + "/satellites/" + getISSId());
         SatelitteDataResponse response = JsonParser.parse(json, SatelitteDataResponse.class);
 
+        return getIssLocationDto(response);
+    }
+
+    private ISSLocationDto getIssLocationDto(SatelitteDataResponse response) {
         ISSLocationDto dto = new ISSLocationDto(
             response.getLatitude(),
             response.getLongitude(),
