@@ -34,5 +34,4 @@ public class ISSLocationRepositoryImpl implements ISSLocationRepository {
     public List<ISSLocationDto> fetchAll() {
         return dslContext.selectFrom(ISS_LOCATION).fetchInto(ISSLocationDto.class);
     }
-
 }
