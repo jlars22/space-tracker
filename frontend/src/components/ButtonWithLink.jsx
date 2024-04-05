@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Tooltip } from "@material-tailwind/react";
 
-const ButtonWithLink = ({ link }) => {
+export default function ButtonWithLink({ link }) {
   return (
     <Tooltip
       content={link.label}
@@ -23,6 +23,4 @@ const ButtonWithLink = ({ link }) => {
       </Link>
     </Tooltip>
   );
-};
-
-export default ButtonWithLink;
+}

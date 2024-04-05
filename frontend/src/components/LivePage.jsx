@@ -1,8 +1,9 @@
 import { Card, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-import eventSource from "api/issLocation";
+
 import LiveDataTable from "./LiveDataTable";
 import LiveMap from "./LiveMap";
+import { eventSourceLive } from "api/issLocation";
 
 const CACHE_KEY = "liveData";
 
@@ -19,10 +20,10 @@ export default function LivePage() {
       localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
     };
 
-    eventSource.addEventListener("message", messageHandler);
+    eventSourceLive.addEventListener("message", messageHandler);
 
     return () => {
-      eventSource.removeEventListener("message", messageHandler);
+      eventSourceLive.removeEventListener("message", messageHandler);
     };
   }, []);
 
@@ -41,9 +42,9 @@ export default function LivePage() {
             `${new Date(data.timestamp).toLocaleDateString()} ${new Date(data.timestamp).toLocaleTimeString()}`}
         </Typography>
       </div>
-      <div className="mb-6 flex items-center justify-center space-x-10">
-        <LiveDataTable data={data} />
+      <div className="mb-6 flex flex-col items-center justify-center space-y-10">
         <LiveMap data={data} />
+        <LiveDataTable data={data} />
       </div>
     </Card>
   );

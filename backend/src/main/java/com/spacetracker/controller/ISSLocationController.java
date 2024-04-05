@@ -23,10 +23,17 @@ public class ISSLocationController {
         return issLocationService.getSavedLocations();
     }
 
-    @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping("/subscribe/saved")
+    public SseEmitter subscribeToSavedISSLocations() {
+        SseEmitter emitter = new SseEmitter(KEEP_OPEN_INFINITE);
+        issLocationService.subscribeSaved(emitter);
+        return emitter;
+    }
+
+    @GetMapping(value = "/subscribe/live", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribeToISSLocation() {
         SseEmitter emitter = new SseEmitter(KEEP_OPEN_INFINITE);
-        issLocationService.subscribe(emitter);
+        issLocationService.subscribeLive(emitter);
         return emitter;
     }
 }

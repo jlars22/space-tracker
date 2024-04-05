@@ -16,33 +16,39 @@ public class ISSLocationService {
 
     private final ISSLocationRepository issLocationRepository;
     private final SpaceAPI spaceAPI;
-    private SseEmitter emitter;
+    private SseEmitter liveEmitter;
+    private SseEmitter savedEmitter;
     private ISSLocationDto latestLocation;
 
     public List<ISSLocationDto> getSavedLocations() {
         return issLocationRepository.fetchAll();
     }
 
-    public void subscribe(SseEmitter emitter) {
-        this.emitter = emitter;
+    public void subscribeLive(SseEmitter emitter) {
+        this.liveEmitter = emitter;
+    }
+
+    public void subscribeSaved(SseEmitter emitter) {
+        this.savedEmitter = emitter;
     }
 
     @Scheduled(fixedRate = 5000)
-    private void fetchAndSend() {
+    private void fetchAndSendLive() {
         System.out.println(LocalTime.now() + ": Fetching and sending ISS location");
         latestLocation = spaceAPI.getISSLocation();
-        sendSseEvent(latestLocation);
+        sendSseEvent(liveEmitter, latestLocation);
     }
 
     @Scheduled(fixedRate = 30000)
-    private void insert() {
+    private void saveAndSend() {
         System.out.println(LocalTime.now() + ": Saving ISS location");
         if (latestLocation != null) {
             issLocationRepository.insert(latestLocation);
+            sendSseEvent(savedEmitter, latestLocation);
         }
     }
 
-    private void sendSseEvent(ISSLocationDto dto) {
+    private void sendSseEvent(SseEmitter emitter, ISSLocationDto dto) {
         if (emitter != null) {
             try {
                 emitter.send(dto);
