@@ -1,4 +1,5 @@
 import React from "react";
+import ReactCountryFlag from "react-country-flag";
 
 const propertyNames = {
   latitude: "Latitude",
@@ -9,6 +10,29 @@ const propertyNames = {
   country: "Country",
   timezone: "Timezone",
   timestamp: "Timestamp",
+};
+
+const renderValue = (key, value) => {
+  if (key === "country") {
+    if (value === "??") {
+      return "Unknown";
+    }
+    return (
+      <>
+        <ReactCountryFlag
+          countryCode={value}
+          style={{ width: 25, height: 25 }}
+          className="mr-1"
+          svg
+        />
+        {value}
+      </>
+    );
+  } else if (typeof value === "number") {
+    return value.toFixed(2);
+  } else {
+    return value;
+  }
 };
 
 export default function LiveDataTable({ data }) {
@@ -31,7 +55,7 @@ export default function LiveDataTable({ data }) {
                     {propertyNames[key]}
                   </td>
                   <td className="border border-gray-600 px-4 py-2">
-                    {typeof value === "number" ? value.toFixed(2) : value}
+                    {renderValue(key, value)}
                   </td>
                 </tr>
               ))}

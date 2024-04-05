@@ -1,17 +1,31 @@
 import React from "react";
-import { VictoryChart, VictoryLine, VictoryAxis, VictoryLegend } from "victory";
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryAxis,
+  VictoryLegend,
+  VictoryTooltip,
+  VictoryScatter,
+  VictoryZoomContainer,
+} from "victory";
 
 export default function LineChart({ data, type, color, yAxisKey }) {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex h-96 items-center justify-center">
       <VictoryChart
         width={400}
         height={300}
-        padding={{ top: 40, bottom: 30, left: 80, right: 30 }}
+        padding={{ left: 50, right: 30 }}
+        domainPadding={{ y: [10, 10], x: [10, 10] }} // Add 20 units of padding to the top of the y-axis
+        containerComponent={
+          <VictoryZoomContainer
+            style={{ touchAction: "none", cursor: "grab" }}
+          />
+        }
       >
         <VictoryLegend
-          x={67}
-          y={0}
+          x={36}
+          y={-30}
           orientation="horizontal"
           style={{ labels: { fill: "white" } }}
           data={[{ name: type, symbol: { fill: color } }]}
@@ -19,10 +33,13 @@ export default function LineChart({ data, type, color, yAxisKey }) {
 
         <VictoryAxis
           dependentAxis
+          tickCount={4}
           style={{
             tickLabels: { fill: "white" },
             axis: { stroke: "white" },
+            grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
+          tickFormat={(y) => Math.round(y)}
         />
         <VictoryAxis
           label="Time"
@@ -30,6 +47,7 @@ export default function LineChart({ data, type, color, yAxisKey }) {
             axisLabel: { padding: 10, fill: "white" },
             tickLabels: { fill: "white" },
             axis: { stroke: "white" },
+            grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
           tickFormat={(x) => ""}
         />
@@ -39,6 +57,14 @@ export default function LineChart({ data, type, color, yAxisKey }) {
             data: { stroke: color },
           }}
           data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
+        />
+
+        <VictoryScatter
+          style={{ data: { fill: color } }}
+          size={3}
+          data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
+          labels={({ datum }) => `${type}: ${Math.round(datum.y)}`}
+          labelComponent={<VictoryTooltip />}
         />
       </VictoryChart>
     </div>
