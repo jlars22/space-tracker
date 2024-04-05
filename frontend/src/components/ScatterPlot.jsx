@@ -1,21 +1,20 @@
 import React from "react";
 import {
   VictoryChart,
-  VictoryLine,
   VictoryAxis,
-  VictoryLegend,
-  VictoryTooltip,
   VictoryScatter,
+  VictoryTooltip,
   VictoryZoomContainer,
+  VictoryLabel,
 } from "victory";
 
-export default function LineChart({ data, type, color, yAxisKey }) {
+export default function ScatterPlot({ data }) {
   return (
     <div className="flex h-80 items-center justify-center">
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 50, right: 30, bottom: 30 }}
+        padding={{ left: 50, right: 30, bottom: 50 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
         containerComponent={
           <VictoryZoomContainer
@@ -23,46 +22,32 @@ export default function LineChart({ data, type, color, yAxisKey }) {
           />
         }
       >
-        <VictoryLegend
-          x={36}
-          y={-30}
-          orientation="horizontal"
-          style={{ labels: { fill: "white" } }}
-          data={[{ name: type, symbol: { fill: color } }]}
+        <VictoryAxis
+          label="Velocity (km/h)"
+          style={{
+            axisLabel: { padding: 35, fill: "white" },
+            tickLabels: { fill: "white" },
+            axis: { stroke: "white" },
+            grid: { stroke: "#434549", strokeWidth: 0.5 },
+          }}
         />
-
         <VictoryAxis
           dependentAxis
-          tickCount={4}
+          label="Altitude (km)"
           style={{
+            axisLabel: { padding: 40, fill: "white" },
             tickLabels: { fill: "white" },
             axis: { stroke: "white" },
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
         />
-        <VictoryAxis
-          label="Time"
-          style={{
-            axisLabel: { padding: 10, fill: "white" },
-            tickLabels: { fill: "white" },
-            axis: { stroke: "white" },
-            grid: { stroke: "#434549", strokeWidth: 0.5 },
-          }}
-          tickFormat={(x) => ""}
-        />
-
-        <VictoryLine
-          style={{
-            data: { stroke: color },
-          }}
-          data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
-        />
-
         <VictoryScatter
-          style={{ data: { fill: color } }}
+          style={{ data: { fill: "#FF5733" } }}
           size={3}
-          data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
-          labels={({ datum }) => `${type}: ${Math.round(datum.y)}`}
+          data={data.map((d) => ({ x: d.velocity, y: d.altitude }))}
+          labels={({ datum }) =>
+            `Altitude: ${Math.round(datum.y)}, Velocity: ${Math.round(datum.x)}`
+          }
           labelComponent={<VictoryTooltip />}
         />
       </VictoryChart>

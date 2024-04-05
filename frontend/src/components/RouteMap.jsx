@@ -19,7 +19,6 @@ function ChangeView({ center }) {
   useEffect(() => {
     map.flyTo(center);
   }, [center, map]);
-  return null;
 }
 
 export default function RouteMap({ route }) {
@@ -36,7 +35,7 @@ export default function RouteMap({ route }) {
         <TileLayer
           url={`https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${process.env.REACT_APP_MAP_API_KEY}`}
         />
-        <Polyline positions={route} color="#FF9800" />
+        <Polyline positions={route} color="#FF5733" />
         {route.length > 0 && <Marker position={center} icon={issMarkerIcon} />}
       </MapContainer>
     </div>

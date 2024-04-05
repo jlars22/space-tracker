@@ -1,3 +1,4 @@
+import { Typography } from "@material-tailwind/react";
 import React from "react";
 import { VictoryPie } from "victory";
 
@@ -7,7 +8,10 @@ export default function PieChart({ data }) {
   const colors = ["#FF5733", "#33FF89", "#3377FF"];
 
   return (
-    <div className="flex h-96 flex-col items-center">
+    <div className="flex h-80 flex-col items-center">
+      <Typography color="white" variant="h6" className="text-center">
+        Visibility distribution
+      </Typography>
       <VictoryPie
         colorScale={colors}
         data={visibilityDistribution}

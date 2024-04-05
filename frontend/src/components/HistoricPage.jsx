@@ -4,6 +4,7 @@ import LineChart from "./LineChart";
 import { eventSourceSaved, fetchSavedISSLocation } from "api/issLocation";
 import PieChart from "./PieChart";
 import RouteMap from "./RouteMap";
+import ScatterPlot from "./ScatterPlot";
 
 export default function HistoricPage() {
   const [historicalData, setHistoricalData] = useState([]);
@@ -55,7 +56,13 @@ export default function HistoricPage() {
               yAxisKey="altitude"
             />
           </Card>
-          <Card className="h-auto bg-gray-800 p-4 shadow-md">
+        </div>
+
+        <div className="flex items-center justify-center space-x-9">
+          <Card className="bg-gray-800 p-4 shadow-md">
+            <ScatterPlot data={historicalData} />
+          </Card>
+          <Card className="bg-gray-800 p-4 shadow-md">
             <PieChart data={historicalData} />
           </Card>
         </div>
