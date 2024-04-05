@@ -1,9 +1,8 @@
 import { Card, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
-
 import LiveDataTable from "./LiveDataTable";
-import LiveMap from "./LiveMap";
 import { eventSourceLive } from "api/issLocation";
+import RouteMap from "./RouteMap";
 
 const CACHE_KEY = "liveData";
 
@@ -27,6 +26,8 @@ export default function LivePage() {
     };
   }, []);
 
+  const route = data ? [[data.latitude, data.longitude]] : [];
+
   return (
     <Card className="m-4 bg-gray-900">
       <div className="flex flex-col items-center p-4 text-center">
@@ -43,7 +44,7 @@ export default function LivePage() {
         </Typography>
       </div>
       <div className="mb-6 flex flex-col items-center justify-center space-y-10">
-        <LiveMap data={data} />
+        <RouteMap route={route} />
         <LiveDataTable data={data} />
       </div>
     </Card>

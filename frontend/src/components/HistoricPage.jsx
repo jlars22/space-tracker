@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import LineChart from "./LineChart";
 import { eventSourceSaved, fetchSavedISSLocation } from "api/issLocation";
 import PieChart from "./PieChart";
+import RouteMap from "./RouteMap";
 
 export default function HistoricPage() {
   const [historicalData, setHistoricalData] = useState([]);
@@ -23,6 +24,11 @@ export default function HistoricPage() {
       eventSourceSaved.removeEventListener("message", messageHandler);
     };
   }, []);
+
+  const route = historicalData.map((point) => [
+    point.latitude,
+    point.longitude,
+  ]);
 
   return (
     <Card className="m-4 bg-gray-900">
@@ -53,9 +59,8 @@ export default function HistoricPage() {
             <PieChart data={historicalData} />
           </Card>
         </div>
-        <div className="flex items-center justify-center space-x-9">
-          <Card className="bg-gray-800 p-4 shadow-md"></Card>
-        </div>
+
+        <RouteMap route={route} />
       </div>
     </Card>
   );
