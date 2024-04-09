@@ -33,12 +33,12 @@ export default function HistoricPage() {
   ]);
 
   return (
-    <Card className="m-4 bg-gray-900">
+    <Card className="m-4 bg-gray-900 ">
       <Typography color="white" variant="h3" className="mt-4 text-center">
         Amount of datasets: {historicalData.length}
       </Typography>
       <div className="mb-2 flex flex-col items-center justify-center space-y-9 p-4 text-center">
-        <div className="flex items-center justify-center space-x-9">
+        <div className="flex items-center justify-center space-x-12">
           <Card className="bg-gray-800 p-4 shadow-md">
             <LineChart
               data={historicalData}
@@ -59,7 +59,7 @@ export default function HistoricPage() {
           </Card>
         </div>
 
-        <div className="flex items-center justify-center space-x-9">
+        <div className="flex items-center justify-center space-x-12">
           <Card className="bg-gray-800 p-4 shadow-md">
             <ScatterPlot data={historicalData} />
           </Card>
@@ -67,7 +67,6 @@ export default function HistoricPage() {
             <PieChart data={historicalData} />
           </Card>
         </div>
-
         <RouteMap route={route} />
       </div>
     </Card>

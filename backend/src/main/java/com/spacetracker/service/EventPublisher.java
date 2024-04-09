@@ -24,7 +24,7 @@ public class EventPublisher {
 
     public void notifySubscribers(EventType event, Object data) {
         List<SseEmitter> emitters = subscribers.get(event);
-        if (emitters != null) {
+        if (emitters != null && !emitters.isEmpty()) {
             for (SseEmitter emitter : emitters) {
                 sendEvent(emitter, data);
             }

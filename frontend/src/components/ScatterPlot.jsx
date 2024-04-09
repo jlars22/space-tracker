@@ -4,7 +4,6 @@ import {
   VictoryAxis,
   VictoryScatter,
   VictoryTooltip,
-  VictoryZoomContainer,
 } from "victory";
 
 export default function ScatterPlot({ data }) {
@@ -15,11 +14,6 @@ export default function ScatterPlot({ data }) {
         height={300}
         padding={{ left: 60, right: 30, bottom: 50 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
-        containerComponent={
-          <VictoryZoomContainer
-            style={{ touchAction: "none", cursor: "grab" }}
-          />
-        }
       >
         <VictoryAxis
           label="Velocity (km/h)"

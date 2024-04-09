@@ -6,7 +6,6 @@ import {
   VictoryLegend,
   VictoryTooltip,
   VictoryScatter,
-  VictoryZoomContainer,
 } from "victory";
 
 export default function LineChart({ data, type, color, yAxisKey }) {
@@ -15,13 +14,8 @@ export default function LineChart({ data, type, color, yAxisKey }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 50, right: 30, bottom: 30, top: 30 }}
+        padding={{ left: 60, right: 30, bottom: 30, top: 30 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
-        containerComponent={
-          <VictoryZoomContainer
-            style={{ touchAction: "none", cursor: "grab" }}
-          />
-        }
       >
         <VictoryLegend
           orientation="horizontal"
@@ -58,7 +52,7 @@ export default function LineChart({ data, type, color, yAxisKey }) {
 
         <VictoryScatter
           style={{ data: { fill: color } }}
-          size={3}
+          size={2}
           data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
           labels={({ datum }) => `${type}: ${Math.round(datum.y)}`}
           labelComponent={<VictoryTooltip />}

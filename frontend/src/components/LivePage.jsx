@@ -1,4 +1,4 @@
-import { Card, Typography, Spinner } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import LiveDataTable from "./LiveDataTable";
 import { eventSourceLive } from "api/issLocation";
@@ -11,7 +11,6 @@ export default function LivePage() {
     const cachedData = localStorage.getItem(CACHE_KEY);
     return cachedData ? JSON.parse(cachedData) : null;
   });
-  const [status, setStatus] = useState("connecting");
 
   useEffect(() => {
     const messageHandler = (event) => {
@@ -31,20 +30,18 @@ export default function LivePage() {
   const route = data ? [[data.latitude, data.longitude]] : [];
 
   return (
-    <Card className="m-4 bg-gray-900">
-      <div className="flex flex-col items-center p-4 text-center">
-        <div className="flex items-center">
-          <Typography color="white" variant="h2" className="text-white">
-            Live data
-          </Typography>
-        </div>
+    <Card className="m-4 bg-gray-900 p-6 shadow-xl">
+      <div className="mb-2 text-center">
+        <Typography color="white" variant="h2" className="font-bold text-white">
+          Live Data Tracking
+        </Typography>
         <Typography color="white" variant="h5" className="text-white">
-          Last update <br />
+          Last update:{" "}
           {data &&
             `${new Date(data.timestamp).toLocaleDateString()} ${new Date(data.timestamp).toLocaleTimeString()}`}
         </Typography>
       </div>
-      <div className="mb-6 flex flex-col items-center justify-center space-y-10">
+      <div className="flex flex-col items-center justify-center">
         <RouteMap route={route} />
         <LiveDataTable data={data} />
       </div>

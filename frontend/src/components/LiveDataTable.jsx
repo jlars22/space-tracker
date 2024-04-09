@@ -1,15 +1,22 @@
 import React from "react";
 import ReactCountryFlag from "react-country-flag";
+import {
+  TbWorldLatitude,
+  TbWorldLongitude,
+  TbMountain,
+  TbEye,
+  TbClock,
+} from "react-icons/tb";
+import { IoMdSpeedometer, IoMdGlobe } from "react-icons/io";
 
 const propertyNames = {
-  latitude: "Latitude",
-  longitude: "Longitude",
-  altitude: "Altitude (km)",
-  velocity: "Velocity (km/h)",
-  visibility: "Visibility",
-  country: "Country",
-  timezone: "Timezone",
-  timestamp: "Timestamp",
+  latitude: { name: "Latitude", icon: <TbWorldLatitude /> },
+  longitude: { name: "Longitude", icon: <TbWorldLongitude /> },
+  altitude: { name: "Altitude (km)", icon: <TbMountain /> },
+  velocity: { name: "Velocity (km/h)", icon: <IoMdSpeedometer /> },
+  visibility: { name: "Visibility", icon: <TbEye /> },
+  country: { name: "Country", icon: <IoMdGlobe /> },
+  timezone: { name: "Timezone", icon: <TbClock /> },
 };
 
 const renderValue = (key, value) => {
@@ -37,26 +44,19 @@ const renderValue = (key, value) => {
 
 export default function LiveDataTable({ data }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="border-collapse border border-gray-600 text-white">
-        <thead>
-          <tr className="bg-gray-800">
-            <th className="border border-gray-600 px-4 py-2">Property</th>
-            <th className="border border-gray-600 px-4 py-2">Value</th>
-          </tr>
-        </thead>
+    <div>
+      <table className="mt-2 text-white">
         <tbody>
           {data &&
             Object.entries(data)
               .filter(([key]) => key !== "timestamp")
               .map(([key, value]) => (
-                <tr key={key} className="border border-gray-600">
-                  <td className="border border-gray-600 px-4 py-2">
-                    {propertyNames[key]}
+                <tr key={key} className="">
+                  <td className="flex items-center px-4 py-2">
+                    {propertyNames[key].icon}
+                    <span className="ml-2">{propertyNames[key].name}</span>
                   </td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    {renderValue(key, value)}
-                  </td>
+                  <td className=" px-4 py-2">{renderValue(key, value)}</td>
                 </tr>
               ))}
         </tbody>
