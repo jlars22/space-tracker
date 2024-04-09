@@ -1,4 +1,4 @@
-import { Card, Typography } from "@material-tailwind/react";
+import { Card, Typography, Spinner } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import LiveDataTable from "./LiveDataTable";
 import { eventSourceLive } from "api/issLocation";
@@ -11,6 +11,7 @@ export default function LivePage() {
     const cachedData = localStorage.getItem(CACHE_KEY);
     return cachedData ? JSON.parse(cachedData) : null;
   });
+  const [status, setStatus] = useState("connecting");
 
   useEffect(() => {
     const messageHandler = (event) => {
@@ -33,8 +34,7 @@ export default function LivePage() {
     <Card className="m-4 bg-gray-900">
       <div className="flex flex-col items-center p-4 text-center">
         <div className="flex items-center">
-          <span className="mr-2 h-3 w-3 animate-pulse rounded-full bg-red-500"></span>
-          <Typography color="white" variant="h3" className="text-white">
+          <Typography color="white" variant="h2" className="text-white">
             Live data
           </Typography>
         </div>
