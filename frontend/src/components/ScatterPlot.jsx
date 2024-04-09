@@ -5,7 +5,6 @@ import {
   VictoryScatter,
   VictoryTooltip,
   VictoryZoomContainer,
-  VictoryLabel,
 } from "victory";
 
 export default function ScatterPlot({ data }) {

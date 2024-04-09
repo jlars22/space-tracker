@@ -19,10 +19,11 @@ export default function HistoricPage() {
       setHistoricalData((prevData) => [...prevData, newData]);
     };
 
-    eventSourceSaved.addEventListener("message", messageHandler);
+    const eventSource = eventSourceSaved(messageHandler);
 
     return () => {
-      eventSourceSaved.removeEventListener("message", messageHandler);
+      eventSource.removeEventListener("message", messageHandler);
+      eventSource.close();
     };
   }, []);
 

@@ -19,10 +19,11 @@ export default function LivePage() {
       localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
     };
 
-    eventSourceLive.addEventListener("message", messageHandler);
+    const eventSource = eventSourceLive(messageHandler);
 
     return () => {
-      eventSourceLive.removeEventListener("message", messageHandler);
+      eventSource.removeEventListener("message", messageHandler);
+      eventSource.close();
     };
   }, []);
 

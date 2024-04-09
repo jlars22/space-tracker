@@ -1,28 +1,35 @@
 import axiosInstance from "./config/axiosConfig";
 
-function createEventSource(endpoint) {
-  const eventSource = new EventSource(
-    `${process.env.REACT_APP_BACKEND_BASE_URL}${endpoint}`,
-  );
+function createEventSource(endpoint, messageHandler) {
+  let eventSource;
 
-  eventSource.onopen = () => {
-    console.log("Connection to server opened.");
+  const connect = () => {
+    eventSource = new EventSource(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}${endpoint}`,
+    );
+
+    eventSource.onopen = () => {
+      console.log("Connection to server opened.");
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("Error:", error);
+      eventSource.close();
+      setTimeout(connect, 5000);
+    };
+
+    eventSource.addEventListener("message", messageHandler);
   };
 
-  eventSource.onerror = (error) => {
-    console.error("Error:", error);
-    eventSource.close();
-  };
+  connect();
 
   return eventSource;
 }
 
-export const eventSourceLive = createEventSource(
-  "/api/iss-location/subscribe/live",
-);
-export const eventSourceSaved = createEventSource(
-  "/api/iss-location/subscribe/saved",
-);
+export const eventSourceLive = (messageHandler) =>
+  createEventSource("/api/iss-location/subscribe/live", messageHandler);
+export const eventSourceSaved = (messageHandler) =>
+  createEventSource("/api/iss-location/subscribe/saved", messageHandler);
 
 export function fetchSavedISSLocation() {
   return axiosInstance
