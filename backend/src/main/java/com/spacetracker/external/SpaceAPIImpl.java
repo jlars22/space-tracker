@@ -27,34 +27,33 @@ public class SpaceAPIImpl implements SpaceAPI {
     }
 
     private ISSLocationDto getIssLocationDto(SatelitteDataResponse response) {
-        ISSLocationDto dto = new ISSLocationDto(
+        CoordinateResponse coordinateResponse = getCountryAndTimezone(
             response.getLatitude(),
-            response.getLongitude(),
-            response.getAltitude(),
-            response.getVelocity(),
-            response.getVisibility(),
-            null,
-            null,
-            LocalDateTime.ofInstant(
-                Instant.ofEpochSecond(response.getTimestamp()),
-                ZoneId.systemDefault()
-            )
+            response.getLongitude()
         );
-        setCountryAndTimezone(dto.getLatitude(), dto.getLongitude(), dto);
-        return dto;
+
+        return new ISSLocationDto.Builder()
+            .latitude(response.getLatitude())
+            .longitude(response.getLongitude())
+            .altitude(response.getAltitude())
+            .velocity(response.getVelocity())
+            .visibility(response.getVisibility())
+            .country(coordinateResponse.getCountryCode())
+            .timezone(coordinateResponse.getTimezoneId())
+            .timestamp(
+                LocalDateTime.ofInstant(
+                    Instant.ofEpochSecond(response.getTimestamp()),
+                    ZoneId.systemDefault()
+                )
+            )
+            .build();
     }
 
-    private void setCountryAndTimezone(
-        BigDecimal latitude,
-        BigDecimal longitude,
-        ISSLocationDto dto
-    ) {
-        CoordinateResponse response = JsonParser.parse(
+    private CoordinateResponse getCountryAndTimezone(BigDecimal latitude, BigDecimal longitude) {
+        return JsonParser.parse(
             HttpClient.get(whereTheISSAtBaseUrl + "/coordinates/" + latitude + "," + longitude),
             CoordinateResponse.class
         );
-        dto.setTimezone(response.getTimezoneId());
-        dto.setCountry(response.getCountryCode());
     }
 
     private int getISSId() {
