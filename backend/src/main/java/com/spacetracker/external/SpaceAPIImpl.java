@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class SpaceAPIImpl implements SpaceAPI {
 
     private final String whereTheISSAtBaseUrl = "https://api.wheretheiss.at/v1";
+    private Integer issId;
 
     @Override
     public ISSLocationDto getISSLocation() {
@@ -57,15 +58,20 @@ public class SpaceAPIImpl implements SpaceAPI {
     }
 
     private int getISSId() {
-        List<SatelitteResponse> responseList = JsonParser.parseList(
-            HttpClient.get(whereTheISSAtBaseUrl + "/satellites"),
-            SatelitteResponse.class
-        );
-        return responseList
-            .stream()
-            .filter(satellite -> "iss".equals(satellite.getName()))
-            .findFirst()
-            .map(SatelitteResponse::getId)
-            .orElseThrow(() -> new RuntimeException("Satellite with name 'iss' not found"));
+        if (issId == null) {
+            System.out.println("Making HTTP call");
+            List<SatelitteResponse> responseList = JsonParser.parseList(
+                HttpClient.get(whereTheISSAtBaseUrl + "/satellites"),
+                SatelitteResponse.class
+            );
+            issId =
+            responseList
+                .stream()
+                .filter(satellite -> "iss".equals(satellite.getName()))
+                .findFirst()
+                .map(SatelitteResponse::getId)
+                .orElseThrow(() -> new RuntimeException("Satellite with name 'iss' not found"));
+        }
+        return issId;
     }
 }
