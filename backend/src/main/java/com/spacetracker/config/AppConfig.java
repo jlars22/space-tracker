@@ -12,7 +12,6 @@ public class AppConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer(Environment environment) {
         String frontendUrl = environment.getProperty("FRONTEND_BASE_URL");
-        System.out.println("FRONTEND_BASE_URL: " + frontendUrl);
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {

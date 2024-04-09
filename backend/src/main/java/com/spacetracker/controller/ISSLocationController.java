@@ -1,10 +1,10 @@
 package com.spacetracker.controller;
 
+import com.spacetracker.factory.SseEmitterFactory;
 import com.spacetracker.service.ISSLocationService;
 import com.spacetracker.service.dto.ISSLocationDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class ISSLocationController {
 
     private final ISSLocationService issLocationService;
-    private final long KEEP_OPEN_INFINITE = -1L;
+    private final SseEmitterFactory sseEmitterFactory;
 
     @GetMapping("/saved")
     public List<ISSLocationDto> getCurrentISSLocation() {
@@ -25,14 +25,14 @@ public class ISSLocationController {
 
     @GetMapping("/subscribe/saved")
     public SseEmitter subscribeToSavedISSLocations() {
-        SseEmitter emitter = new SseEmitter(KEEP_OPEN_INFINITE);
+        SseEmitter emitter = sseEmitterFactory.create();
         issLocationService.subscribeSaved(emitter);
         return emitter;
     }
 
-    @GetMapping(value = "/subscribe/live", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/subscribe/live")
     public SseEmitter subscribeToISSLocation() {
-        SseEmitter emitter = new SseEmitter(KEEP_OPEN_INFINITE);
+        SseEmitter emitter = sseEmitterFactory.create();
         issLocationService.subscribeLive(emitter);
         return emitter;
     }
