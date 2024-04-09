@@ -14,7 +14,7 @@ export default function ScatterPlot({ data }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 50, right: 30, bottom: 50 }}
+        padding={{ left: 60, right: 30, bottom: 50 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
         containerComponent={
           <VictoryZoomContainer
@@ -35,7 +35,7 @@ export default function ScatterPlot({ data }) {
           dependentAxis
           label="Altitude (km)"
           style={{
-            axisLabel: { padding: 40, fill: "white" },
+            axisLabel: { padding: 50, fill: "white" },
             tickLabels: { fill: "white" },
             axis: { stroke: "white" },
             grid: { stroke: "#434549", strokeWidth: 0.5 },

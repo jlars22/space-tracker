@@ -15,7 +15,7 @@ export default function LineChart({ data, type, color, yAxisKey }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 50, right: 30, bottom: 30 }}
+        padding={{ left: 50, right: 30, bottom: 30, top: 30 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
         containerComponent={
           <VictoryZoomContainer
@@ -24,8 +24,6 @@ export default function LineChart({ data, type, color, yAxisKey }) {
         }
       >
         <VictoryLegend
-          x={36}
-          y={-30}
           orientation="horizontal"
           style={{ labels: { fill: "white" } }}
           data={[{ name: type, symbol: { fill: color } }]}

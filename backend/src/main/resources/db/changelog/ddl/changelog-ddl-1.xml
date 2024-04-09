@@ -16,7 +16,7 @@
                 velocity   NUMERIC   NOT NULL,
                 visibility TEXT      NOT NULL,
                 country    TEXT      NOT NULL,
-                timezone    TEXT      NOT NULL,
+                timezone   TEXT      NOT NULL,
                 timestamp  TIMESTAMP NOT NULL
             );
         </sql>

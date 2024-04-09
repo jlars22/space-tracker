@@ -24,7 +24,7 @@ export default function PieChart({ data }) {
           labels: { fill: "white", fontSize: 14 },
           data: { fillOpacity: 0.9, stroke: "#191D28", strokeWidth: 2 },
         }}
-        padding={{ top: 20, bottom: 20, left: 90, right: 90 }}
+        padding={{ top: 20, bottom: 60, left: 90, right: 90 }}
       />
     </div>
   );
