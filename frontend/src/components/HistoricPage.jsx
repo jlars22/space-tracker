@@ -1,10 +1,11 @@
 import { Card, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import LineChart from "./LineChart";
-import { eventSourceSaved, fetchSavedISSLocation } from "api/issLocation";
+import { fetchSavedISSLocation } from "api/issLocation";
 import PieChart from "./PieChart";
 import RouteMap from "./RouteMap";
 import ScatterPlot from "./ScatterPlot";
+import { eventSourceIssInformation } from "api/issInformation";
 
 export default function HistoricPage() {
   const [historicalData, setHistoricalData] = useState([]);
@@ -19,7 +20,7 @@ export default function HistoricPage() {
       setHistoricalData((prevData) => [...prevData, newData]);
     };
 
-    const eventSource = eventSourceSaved(messageHandler);
+    const eventSource = eventSourceIssInformation(messageHandler);
 
     return () => {
       eventSource.removeEventListener("message", messageHandler);

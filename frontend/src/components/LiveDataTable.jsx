@@ -49,7 +49,7 @@ export default function LiveDataTable({ data }) {
         <tbody>
           {data &&
             Object.entries(data)
-              .filter(([key]) => key !== "timestamp")
+              .filter(([key]) => key !== "timestamp" && key !== "astronauts")
               .map(([key, value]) => (
                 <tr key={key} className="">
                   <td className="flex items-center px-4 py-2">

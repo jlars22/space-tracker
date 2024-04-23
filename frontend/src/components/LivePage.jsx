@@ -1,8 +1,9 @@
 import { Card, Typography } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import LiveDataTable from "./LiveDataTable";
-import { eventSourceLive } from "api/issLocation";
+
 import RouteMap from "./RouteMap";
+import { eventSourceIssInformation } from "api/issInformation";
 
 const CACHE_KEY = "liveData";
 
@@ -19,7 +20,7 @@ export default function LivePage() {
       localStorage.setItem(CACHE_KEY, JSON.stringify(newData));
     };
 
-    const eventSource = eventSourceLive(messageHandler);
+    const eventSource = eventSourceIssInformation(messageHandler);
 
     return () => {
       eventSource.removeEventListener("message", messageHandler);
