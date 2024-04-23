@@ -1,9 +1,9 @@
-package com.spacetracker.repository;
+package com.spacetracker.repository.isslocation;
 
 import com.spacetracker.service.dto.ISSLocationDto;
 import java.util.List;
 
 public interface ISSLocationRepository {
-    void insert(ISSLocationDto issLocationDto);
+    ISSLocationDto insert(ISSLocationDto issLocationDto);
     List<ISSLocationDto> fetchAll();
 }

@@ -13,6 +13,7 @@ def envProperties = new Properties()
 envFile.withInputStream { inputStream ->
     envProperties.load(inputStream)
 }
+
 def postgresBaseUrl = envProperties.getProperty('POSTGRES_BASE_URL') ?: 'localhost:5432'
 def postgresDatabase = envProperties.getProperty('POSTGRES_DATABASE') ?: 'spacetracker'
 def postgresUrl = "jdbc:postgresql://${postgresBaseUrl}/${postgresDatabase}"
@@ -63,15 +64,15 @@ spotless {
         toggleOffOn()
         prettier(
                 [
-                        "prettier": "3.0.3",
+                        "prettier"            : "3.0.3",
                         "prettier-plugin-java": "2.3.0"
                 ]
         ).config(
                 [
-                        "parser": "java",
+                        "parser"    : "java",
                         "printWidth": 100,
-                        "tabWidth": 4,
-                        "plugins": ["prettier-plugin-java"]
+                        "tabWidth"  : 4,
+                        "plugins"   : ["prettier-plugin-java"]
                 ]
         )
         removeUnusedImports()

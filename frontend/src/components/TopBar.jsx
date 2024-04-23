@@ -20,7 +20,6 @@ const TopBar = ({ links }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  console.log(status);
   return (
     <div className="flex items-center justify-between bg-gray-900 p-2">
       <div className="ml-3 flex items-center">
@@ -28,7 +27,7 @@ const TopBar = ({ links }) => {
           International Space Station
         </Typography>
         {status === "OK" ? (
-          <FaCheckCircle className="ml-2 h-6 w-6 animate-pulse rounded-full text-green-600"></FaCheckCircle>
+          <FaCheckCircle className="ml-2 h-6 w-6 animate-pulse rounded-full text-green-600" />
         ) : (
           <Spinner color="red" className="ml-2" />
         )}

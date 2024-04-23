@@ -9,6 +9,11 @@ import {
 } from "victory";
 
 export default function LineChart({ data, type, color, yAxisKey }) {
+  const chartData = data.map((d) => ({
+    x: new Date(d.timestamp),
+    y: d[yAxisKey],
+  }));
+
   return (
     <div className="flex h-80 items-center justify-center">
       <VictoryChart
@@ -47,13 +52,13 @@ export default function LineChart({ data, type, color, yAxisKey }) {
           style={{
             data: { stroke: color },
           }}
-          data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
+          data={chartData}
         />
 
         <VictoryScatter
           style={{ data: { fill: color } }}
           size={2}
-          data={data.map((d) => ({ x: new Date(d.timestamp), y: d[yAxisKey] }))}
+          data={chartData}
           labels={({ datum }) => `${type}: ${Math.round(datum.y)}`}
           labelComponent={<VictoryTooltip />}
         />

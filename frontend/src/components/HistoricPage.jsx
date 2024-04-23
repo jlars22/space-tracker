@@ -33,7 +33,7 @@ export default function HistoricPage() {
   ]);
 
   return (
-    <Card className="m-4 bg-gray-900 ">
+    <Card className="m-4 bg-gray-900">
       <Typography color="white" variant="h3" className="mt-4 text-center">
         Amount of datasets: {historicalData.length}
       </Typography>

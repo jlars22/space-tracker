@@ -1,7 +1,8 @@
 import axios from "axios";
+import { BACKEND_BASE_URL } from "config";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_BASE_URL,
+  baseURL: BACKEND_BASE_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

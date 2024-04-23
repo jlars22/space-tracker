@@ -7,6 +7,7 @@ import {
 } from "react-leaflet";
 import { useEffect } from "react";
 import L from "leaflet";
+import { MAP_API_KEY } from "config";
 
 const issMarkerIcon = L.icon({
   iconUrl: "/ISS_icon.png",
@@ -33,7 +34,7 @@ export default function RouteMap({ route }) {
       >
         <ChangeView center={center} />
         <TileLayer
-          url={`https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${process.env.REACT_APP_MAP_API_KEY}`}
+          url={`https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${MAP_API_KEY}`}
         />
         <Polyline positions={route} color="#FF5733" />
         {route.length > 0 && <Marker position={center} icon={issMarkerIcon} />}

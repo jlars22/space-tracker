@@ -1,5 +1,6 @@
-package com.spacetracker.factory;
+package com.spacetracker.factory.implementation;
 
+import com.spacetracker.factory.SseEmitterFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 

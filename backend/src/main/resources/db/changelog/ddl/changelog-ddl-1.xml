@@ -22,12 +22,12 @@
         </sql>
 
         <sql>
-            CREATE TABLE people_on_board
+            CREATE TABLE astronaut_on_board
             (
                 id          SERIAL PRIMARY KEY,
                 location_id INT  NOT NULL,
                 name        TEXT NOT NULL,
-                CONSTRAINT fk_people_iss FOREIGN KEY (location_id) REFERENCES iss_location (id)
+                CONSTRAINT fk_astronaut_iss FOREIGN KEY (location_id) REFERENCES iss_location (id)
             );
         </sql>
 

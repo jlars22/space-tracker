@@ -1,7 +1,8 @@
-package com.spacetracker.repository;
+package com.spacetracker.repository.isslocation.implementation;
 
 import static com.generated.Tables.ISS_LOCATION;
 
+import com.spacetracker.repository.isslocation.ISSLocationRepository;
 import com.spacetracker.service.dto.ISSLocationDto;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,8 +17,8 @@ public class ISSLocationRepositoryImpl implements ISSLocationRepository {
     private final DSLContext dslContext;
 
     @Override
-    public void insert(ISSLocationDto issLocationDto) {
-        dslContext
+    public ISSLocationDto insert(ISSLocationDto issLocationDto) {
+        return dslContext
             .insertInto(ISS_LOCATION)
             .set(ISS_LOCATION.LATITUDE, issLocationDto.getLatitude())
             .set(ISS_LOCATION.LONGITUDE, issLocationDto.getLongitude())
@@ -27,7 +28,9 @@ public class ISSLocationRepositoryImpl implements ISSLocationRepository {
             .set(ISS_LOCATION.COUNTRY, issLocationDto.getCountry())
             .set(ISS_LOCATION.TIMEZONE, issLocationDto.getTimezone())
             .set(ISS_LOCATION.TIMESTAMP, LocalDateTime.now())
-            .execute();
+            .returning()
+            .fetchOne()
+            .into(ISSLocationDto.class);
     }
 
     @Override

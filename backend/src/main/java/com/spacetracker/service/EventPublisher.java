@@ -11,8 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class EventPublisher {
 
     public enum EventType {
-        ISS_LOCATION_SAVED,
-        ISS_LOCATION_LIVE,
+        ISS_INFORMATION_LIVE,
     }
 
     private final Map<EventType, List<SseEmitter>> subscribers = new EnumMap<>(EventType.class);

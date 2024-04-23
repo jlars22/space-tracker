@@ -23,6 +23,7 @@ export default function ScatterPlot({ data }) {
             axis: { stroke: "white" },
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
+          tickCount={4}
         />
         <VictoryAxis
           dependentAxis
@@ -33,6 +34,7 @@ export default function ScatterPlot({ data }) {
             axis: { stroke: "white" },
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
+          tickCount={4}
         />
         <VictoryScatter
           style={{ data: { fill: "#FF5733" } }}

@@ -2,12 +2,12 @@ package com.spacetracker.service.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class ISSLocationDto {
+public class ISSInformationDto {
 
-    private Integer id;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private BigDecimal altitude;
@@ -16,8 +16,9 @@ public class ISSLocationDto {
     private String country;
     private String timezone;
     private LocalDateTime timestamp;
+    private List<AstronautOnBoardDto> astronauts;
 
-    private ISSLocationDto() {}
+    private ISSInformationDto() {}
 
     public static class Builder {
 
@@ -29,6 +30,7 @@ public class ISSLocationDto {
         private String country;
         private String timezone;
         private LocalDateTime timestamp;
+        private List<AstronautOnBoardDto> astronauts;
 
         public Builder latitude(BigDecimal latitude) {
             this.latitude = latitude;
@@ -70,17 +72,23 @@ public class ISSLocationDto {
             return this;
         }
 
-        public ISSLocationDto build() {
-            ISSLocationDto dto = new ISSLocationDto();
-            dto.latitude = this.latitude;
-            dto.longitude = this.longitude;
-            dto.altitude = this.altitude;
-            dto.velocity = this.velocity;
-            dto.visibility = this.visibility;
-            dto.country = this.country;
-            dto.timezone = this.timezone;
-            dto.timestamp = this.timestamp;
-            return dto;
+        public Builder astronauts(List<AstronautOnBoardDto> astronauts) {
+            this.astronauts = astronauts;
+            return this;
+        }
+
+        public ISSInformationDto build() {
+            ISSInformationDto issInformationDto = new ISSInformationDto();
+            issInformationDto.latitude = this.latitude;
+            issInformationDto.longitude = this.longitude;
+            issInformationDto.altitude = this.altitude;
+            issInformationDto.velocity = this.velocity;
+            issInformationDto.visibility = this.visibility;
+            issInformationDto.country = this.country;
+            issInformationDto.timezone = this.timezone;
+            issInformationDto.timestamp = this.timestamp;
+            issInformationDto.astronauts = this.astronauts;
+            return issInformationDto;
         }
     }
 }
