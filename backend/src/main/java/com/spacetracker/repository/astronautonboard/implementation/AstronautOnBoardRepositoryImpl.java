@@ -2,9 +2,11 @@ package com.spacetracker.repository.astronautonboard.implementation;
 
 import static com.generated.Tables.ASTRONAUT_ON_BOARD;
 
+import com.generated.tables.records.AstronautOnBoardRecord;
 import com.spacetracker.repository.astronautonboard.AstronautOnBoardRepository;
 import com.spacetracker.service.dto.AstronautOnBoardDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -16,12 +18,18 @@ public class AstronautOnBoardRepositoryImpl implements AstronautOnBoardRepositor
     private final DSLContext dslContext;
 
     @Override
-    public void insert(Integer locationId, String name) {
-        dslContext
-            .insertInto(ASTRONAUT_ON_BOARD)
-            .set(ASTRONAUT_ON_BOARD.LOCATION_ID, locationId)
-            .set(ASTRONAUT_ON_BOARD.NAME, name)
-            .execute();
+    public void batchInsert(List<AstronautOnBoardDto> dtos) {
+        List<AstronautOnBoardRecord> records = dtos
+            .stream()
+            .map(dto -> {
+                AstronautOnBoardRecord record = dslContext.newRecord(ASTRONAUT_ON_BOARD);
+                record.setLocationId(dto.getLocationId());
+                record.setName(dto.getName());
+                return record;
+            })
+            .collect(Collectors.toList());
+
+        dslContext.batchInsert(records).execute();
     }
 
     @Override

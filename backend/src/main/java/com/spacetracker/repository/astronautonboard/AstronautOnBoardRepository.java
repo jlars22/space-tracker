@@ -4,7 +4,7 @@ import com.spacetracker.service.dto.AstronautOnBoardDto;
 import java.util.List;
 
 public interface AstronautOnBoardRepository {
-    void insert(Integer locationId, String name);
+    void batchInsert(List<AstronautOnBoardDto> dtos);
     List<AstronautOnBoardDto> fetchAllByLocationId(Integer locationId);
     List<AstronautOnBoardDto> fetchAll();
 }

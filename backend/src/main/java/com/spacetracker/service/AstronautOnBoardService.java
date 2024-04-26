@@ -24,9 +24,7 @@ public class AstronautOnBoardService {
 
     public List<AstronautOnBoardDto> fetchAndInsert(Integer locationId) {
         List<AstronautOnBoardDto> astronautsOnBoard = spaceAPI.getAstronautsOnBoard(locationId);
-        astronautsOnBoard.forEach(astronaut ->
-            astronautOnBoardRepository.insert(locationId, astronaut.getName())
-        );
+        astronautOnBoardRepository.batchInsert(astronautsOnBoard);
         return astronautsOnBoard;
     }
 }

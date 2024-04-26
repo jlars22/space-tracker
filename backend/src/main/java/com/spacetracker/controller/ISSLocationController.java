@@ -16,7 +16,7 @@ public class ISSLocationController {
     private final ISSLocationService issLocationService;
 
     @GetMapping
-    public List<ISSLocationDto> getCurrentISSLocation() {
+    public List<ISSLocationDto> getSavedLocations() {
         return issLocationService.getSavedLocations();
     }
 }
