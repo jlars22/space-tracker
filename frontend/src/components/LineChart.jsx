@@ -19,7 +19,7 @@ export default function LineChart({ data, type, color, yAxisKey }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 60, right: 30, bottom: 30, top: 30 }}
+        padding={{ left: 80, right: 30, bottom: 30, top: 30 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
       >
         <VictoryLegend

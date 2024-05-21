@@ -11,7 +11,6 @@ import com.spacetracker.service.dto.ISSLocationDto;
 import com.spacetracker.util.HttpClient;
 import com.spacetracker.util.JsonParser;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -65,10 +64,10 @@ public class SpaceAPIImpl implements SpaceAPI {
         );
 
         return new ISSLocationDto.Builder()
-            .latitude(response.getLatitude().setScale(1, RoundingMode.DOWN))
-            .longitude(response.getLongitude().setScale(1, RoundingMode.DOWN))
-            .altitude(response.getAltitude().setScale(1, RoundingMode.DOWN))
-            .velocity(response.getVelocity().setScale(1, RoundingMode.DOWN))
+            .latitude(response.getLatitude())
+            .longitude(response.getLongitude())
+            .altitude(response.getAltitude())
+            .velocity(response.getVelocity())
             .visibility(response.getVisibility())
             .country(coordinateResponse.getCountryCode())
             .timezone(coordinateResponse.getTimezoneId())

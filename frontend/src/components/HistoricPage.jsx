@@ -6,18 +6,26 @@ import PieChart from "./PieChart";
 import RouteMap from "./RouteMap";
 import ScatterPlot from "./ScatterPlot";
 import { eventSourceIssInformation } from "api/issInformation";
+import { fetchSavedAstronauts } from "api/astronauts";
+import BarChart from "./BarChart";
 
 export default function HistoricPage() {
   const [historicalData, setHistoricalData] = useState([]);
+  const [astronautData, setAstronautData] = useState([]);
 
   useEffect(() => {
     fetchSavedISSLocation()
       .then((data) => setHistoricalData(data))
       .catch((error) => console.error("Error:", error));
 
+    fetchSavedAstronauts()
+      .then((data) => setAstronautData(data))
+      .catch((error) => console.error("Error:", error));
+
     const messageHandler = (event) => {
       const newData = JSON.parse(event.data);
       setHistoricalData((prevData) => [...prevData, newData]);
+      setAstronautData((prevData) => [...prevData, ...newData.astronauts]);
     };
 
     const eventSource = eventSourceIssInformation(messageHandler);
@@ -68,6 +76,13 @@ export default function HistoricPage() {
             <PieChart data={historicalData} />
           </Card>
         </div>
+
+        <div className="flex items-center justify-center space-x-12">
+          <Card className="w-full bg-gray-800 p-4 shadow-md">
+            <BarChart data={astronautData} />
+          </Card>
+        </div>
+
         <RouteMap route={route} />
       </div>
     </Card>
