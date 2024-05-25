@@ -1,13 +1,13 @@
+import { MAP_API_KEY } from "config";
+import L from "leaflet";
+import { useEffect } from "react";
 import {
   MapContainer,
+  Marker,
   Polyline,
   TileLayer,
   useMap,
-  Marker,
 } from "react-leaflet";
-import { useEffect } from "react";
-import L from "leaflet";
-import { MAP_API_KEY } from "config";
 
 const issMarkerIcon = L.icon({
   iconUrl: "/ISS_icon.png",
@@ -26,7 +26,7 @@ export default function RouteMap({ route }) {
   const center = route.length > 0 ? route[route.length - 1] : [0, 0];
 
   return (
-    <div className="h-96 w-8/12 shadow-md">
+    <div className="h-96 w-1/2 rounded-md border-2 p-2 shadow-sm">
       <MapContainer
         center={center}
         zoom={3}

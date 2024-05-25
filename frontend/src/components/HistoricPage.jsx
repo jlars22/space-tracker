@@ -1,40 +1,13 @@
 import { Card, Typography } from "@material-tailwind/react";
-import React, { useEffect, useState } from "react";
+import BarChart from "./BarChart";
+import { useHistoricalDataAndSubscribe } from "./hooks/getHistoricalDataAndSubscribe";
 import LineChart from "./LineChart";
-import { fetchSavedISSLocation } from "api/issLocation";
 import PieChart from "./PieChart";
 import RouteMap from "./RouteMap";
 import ScatterPlot from "./ScatterPlot";
-import { eventSourceIssInformation } from "api/issInformation";
-import { fetchSavedAstronauts } from "api/astronauts";
-import BarChart from "./BarChart";
 
 export default function HistoricPage() {
-  const [historicalData, setHistoricalData] = useState([]);
-  const [astronautData, setAstronautData] = useState([]);
-
-  useEffect(() => {
-    fetchSavedISSLocation()
-      .then((data) => setHistoricalData(data))
-      .catch((error) => console.error("Error:", error));
-
-    fetchSavedAstronauts()
-      .then((data) => setAstronautData(data))
-      .catch((error) => console.error("Error:", error));
-
-    const messageHandler = (event) => {
-      const newData = JSON.parse(event.data);
-      setHistoricalData((prevData) => [...prevData, newData]);
-      setAstronautData((prevData) => [...prevData, ...newData.astronauts]);
-    };
-
-    const eventSource = eventSourceIssInformation(messageHandler);
-
-    return () => {
-      eventSource.removeEventListener("message", messageHandler);
-      eventSource.close();
-    };
-  }, []);
+  const { historicalData, astronautData } = useHistoricalDataAndSubscribe();
 
   const route = historicalData.map((point) => [
     point.latitude,
@@ -42,13 +15,16 @@ export default function HistoricPage() {
   ]);
 
   return (
-    <Card className="m-4 bg-gray-900">
-      <Typography color="white" variant="h3" className="mt-4 text-center">
-        Amount of datasets: {historicalData.length}
-      </Typography>
+    <div>
+      <div className="mb-2 mt-2 text-center">
+        <Typography variant="h3">History Data</Typography>
+        <Typography variant="paragraph">
+          Amount of datasets: {historicalData.length}
+        </Typography>
+      </div>
       <div className="mb-2 flex flex-col items-center justify-center space-y-9 p-4 text-center">
         <div className="flex items-center justify-center space-x-12">
-          <Card className="bg-gray-800 p-4 shadow-md">
+          <Card className=" rounded-md border-2 p-4 shadow-sm">
             <LineChart
               data={historicalData}
               type="Velocity (km/h)"
@@ -57,7 +33,7 @@ export default function HistoricPage() {
               yAxisKey="velocity"
             />
           </Card>
-          <Card className="bg-gray-800 p-4 shadow-md">
+          <Card className="rounded-md border-2 p-4 shadow-sm">
             <LineChart
               data={historicalData}
               type="Altitude (km)"
@@ -69,22 +45,22 @@ export default function HistoricPage() {
         </div>
 
         <div className="flex items-center justify-center space-x-12">
-          <Card className="bg-gray-800 p-4 shadow-md">
+          <Card className="rounded-md border-2 p-4 shadow-sm">
             <ScatterPlot data={historicalData} />
           </Card>
-          <Card className="bg-gray-800 p-4 shadow-md">
+          <Card className="rounded-md border-2 p-4 shadow-sm">
             <PieChart data={historicalData} />
           </Card>
         </div>
 
         <div className="flex items-center justify-center space-x-12">
-          <Card className="w-full bg-gray-800 p-4 shadow-md">
+          <Card className="w-full  rounded-md border-2 p-4 shadow-sm">
             <BarChart data={astronautData} />
           </Card>
         </div>
 
         <RouteMap route={route} />
       </div>
-    </Card>
+    </div>
   );
 }

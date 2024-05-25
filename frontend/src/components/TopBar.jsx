@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import ButtonWithLink from "./ButtonWithLink";
-import { Typography, Spinner } from "@material-tailwind/react";
+import { Spinner, Typography } from "@material-tailwind/react";
 import { fetchHealth } from "api/health";
-import { FaCheckCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import TypographyWithLink from "./TypographyWithLink";
 
 const TopBar = ({ links }) => {
   const [status, setStatus] = useState("connecting");
@@ -21,20 +20,16 @@ const TopBar = ({ links }) => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between bg-gray-900 p-2">
+    <div className="flex items-center justify-between p-2">
       <div className="ml-3 flex items-center">
-        <Typography color="white" variant="h3" className="ml-2">
+        <Typography variant="h3" className="ml-2">
           International Space Station
         </Typography>
-        {status === "OK" ? (
-          <FaCheckCircle className="ml-2 h-6 w-6 animate-pulse rounded-full text-green-600" />
-        ) : (
-          <Spinner color="red" className="ml-2" />
-        )}
+        {status !== "OK" && <Spinner color="blue" className="ml-2" />}
       </div>
       <div className="flex justify-center">
         {links.map((link, index) => (
-          <ButtonWithLink key={index} link={link} />
+          <TypographyWithLink key={index} link={link} />
         ))}
       </div>
     </div>

@@ -1,21 +1,12 @@
-import React from "react";
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from "victory";
+import { VictoryAxis, VictoryBar, VictoryChart } from "victory";
+import { useAstronautData } from "./hooks/getAstronautCount";
 
 export default function BarChart({ data }) {
-  const chartData = data.reduce((nameCounts, record) => {
-    const existingRecord = nameCounts.find((item) => item.name === record.name);
-    if (existingRecord) {
-      existingRecord.count += 1;
-    } else {
-      nameCounts.push({ name: record.name, count: 1 });
-    }
-    return nameCounts;
-  }, []);
+  const chartData = useAstronautData(data);
 
   return (
     <div>
       <VictoryChart
-        theme={VictoryTheme.material}
         domainPadding={20}
         height={500}
         width={930}
@@ -28,14 +19,15 @@ export default function BarChart({ data }) {
             tickLabels: {
               fontSize: 10,
               padding: 5,
-              fill: "white",
             },
+            grid: { stroke: "#d6d6d6" },
           }}
         />
         <VictoryAxis
           tickFormat={(x) => `${x}`}
           style={{
-            tickLabels: { fontSize: 12, padding: 5, fill: "white" },
+            tickLabels: { fontSize: 12, padding: 5 },
+            grid: { stroke: "#d6d6d6" },
           }}
         />
         <VictoryBar
@@ -43,7 +35,7 @@ export default function BarChart({ data }) {
           data={chartData}
           x="name"
           y="count"
-          style={{ data: { fill: "#c43a31" } }}
+          style={{ data: { fill: "#FF694B" } }}
         />
       </VictoryChart>
     </div>

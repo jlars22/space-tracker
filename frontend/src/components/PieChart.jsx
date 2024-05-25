@@ -1,5 +1,3 @@
-import { Typography } from "@material-tailwind/react";
-import React from "react";
 import { VictoryPie } from "victory";
 
 export default function PieChart({ data }) {
@@ -9,9 +7,6 @@ export default function PieChart({ data }) {
 
   return (
     <div className="flex h-80 flex-col items-center">
-      <Typography color="white" variant="h6" className="text-center">
-        Visibility distribution
-      </Typography>
       <VictoryPie
         colorScale={colors}
         data={visibilityDistribution}
@@ -21,10 +16,10 @@ export default function PieChart({ data }) {
         height={300}
         labels={({ datum }) => `${datum.x}: ${datum.y}`}
         style={{
-          labels: { fill: "white", fontSize: 14 },
+          labels: { fontSize: 14 },
           data: { fillOpacity: 0.9, stroke: "#191D28", strokeWidth: 2 },
         }}
-        padding={{ top: 40, bottom: 60, left: 90, right: 90 }}
+        padding={{ top: 50, bottom: 60, left: 90, right: 90 }}
       />
     </div>
   );

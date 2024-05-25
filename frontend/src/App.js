@@ -1,11 +1,9 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import LivePage from "./components/LivePage";
+import { TbHistory, TbLiveView } from "react-icons/tb";
 import HistoricPage from "./components/HistoricPage";
+import LivePage from "./components/LivePage";
 import TopBar from "./components/TopBar";
-import { TbLiveView } from "react-icons/tb";
-import { TbHistory } from "react-icons/tb";
 
 export default function App() {
   const links = [
@@ -16,8 +14,8 @@ export default function App() {
       logo: <TbLiveView />,
     },
     {
-      label: "Historic",
-      path: "/historic",
+      label: "History",
+      path: "/historiy",
       component: <HistoricPage />,
       logo: <TbHistory />,
     },

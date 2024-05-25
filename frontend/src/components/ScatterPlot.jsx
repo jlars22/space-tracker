@@ -1,7 +1,6 @@
-import React from "react";
 import {
-  VictoryChart,
   VictoryAxis,
+  VictoryChart,
   VictoryScatter,
   VictoryTooltip,
 } from "victory";
@@ -12,15 +11,14 @@ export default function ScatterPlot({ data }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 80, right: 30, bottom: 50 }}
+        padding={{ left: 60, right: 30, bottom: 50 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
       >
         <VictoryAxis
           label="Velocity (km/h)"
           style={{
-            axisLabel: { padding: 35, fill: "white" },
-            tickLabels: { fill: "white" },
-            axis: { stroke: "white" },
+            axisLabel: { padding: 35 },
+
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
           tickCount={4}
@@ -29,12 +27,10 @@ export default function ScatterPlot({ data }) {
           dependentAxis
           label="Altitude (km)"
           style={{
-            axisLabel: { padding: 60, fill: "white" },
-            tickLabels: { fill: "white" },
-            axis: { stroke: "white" },
+            axisLabel: { padding: 40 },
+
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
-          tickCount={4}
         />
         <VictoryScatter
           style={{ data: { fill: "#FF5733" } }}
