@@ -11,7 +11,7 @@ export default function ScatterPlot({ data }) {
       <VictoryChart
         width={400}
         height={300}
-        padding={{ left: 60, right: 30, bottom: 50 }}
+        padding={{ left: 60, right: 30, bottom: 50, top: 20 }}
         domainPadding={{ y: [10, 10], x: [10, 10] }}
       >
         <VictoryAxis
@@ -27,7 +27,7 @@ export default function ScatterPlot({ data }) {
           dependentAxis
           label="Altitude (km)"
           style={{
-            axisLabel: { padding: 40 },
+            axisLabel: { padding: 45 },
 
             grid: { stroke: "#434549", strokeWidth: 0.5 },
           }}
