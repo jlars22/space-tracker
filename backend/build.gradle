@@ -7,7 +7,6 @@ plugins {
     id 'com.diffplug.spotless' version '6.25.0'
 }
 
-// Read .env file
 def envFile = file('.env')
 def envProperties = new Properties()
 envFile.withInputStream { inputStream ->
@@ -51,8 +50,8 @@ dependencies {
     liquibaseRuntime "org.yaml:snakeyaml:1.31"
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.projectlombok:lombok:1.18.22' // Add Lombok dependency
-    annotationProcessor 'org.projectlombok:lombok:1.18.22' // Add Lombok annotation processor
+    implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
 tasks.named('test') {
